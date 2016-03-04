@@ -163,8 +163,8 @@ PHP_FUNCTION(confirm_phphashids_compiled){
         }
 
         len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "phphashids", arg);
-        RETURN_STRINGL(strg, len);
-}
+        RETURN_STRINGL(strg, len, 0);
+        }
 PHP_FUNCTION(hashid_encode){
         struct hashids_t *hashids;
 //        char *salt = HASHIDS_DEFAULT_SALT, *alphabet = HASHIDS_DEFAULT_ALPHABET;
@@ -180,7 +180,7 @@ PHP_FUNCTION(hashid_encode){
             return;
         }
         hashids = hashids_init3(salt, min_hash_length, alphabet);
-        
+    
         numbers = &auto_id;
         buffer = emalloc(hashids_estimate_encoded_size(hashids, 1, numbers));
 //		php_printf("File: %s\n","buf" );
@@ -193,7 +193,7 @@ PHP_FUNCTION(hashid_encode){
 
         hashids_free(hashids);
 
-        RETURN_STRINGL(encode_id, encode_id_len);
+        RETURN_STRINGL(encode_id, encode_id_len, 0);
 
 }
 PHP_FUNCTION(hashid_decode){
@@ -219,6 +219,7 @@ PHP_FUNCTION(hashid_decode){
         RETURN_LONG(number);
 
 }
+//#include "hashids.c"
 /* }}} */
 /* The previous line is meant for vim and emacs, so it can correctly fold and 
    unfold functions in source code. See the corresponding marks just before 
