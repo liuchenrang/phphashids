@@ -1,0 +1,13 @@
+// $Id$
+// vim:ft=javascript
+
+// If your extension references something external, use ARG_WITH
+// ARG_WITH("phphashids", "for phphashids support", "no");
+
+// Otherwise, use ARG_ENABLE
+// ARG_ENABLE("phphashids", "enable phphashids support", "no");
+
+if (PHP_PHPHASHIDS != "no") {
+	EXTENSION("phphashids", "phphashids.c");
+}
+

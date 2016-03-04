@@ -1,0 +1,8 @@
+phphashids.lo: /Users/XingHuo/software/php-5.4.32/ext/phphashids/phphashids.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Users/XingHuo/software/php-5.4.32/ext/phphashids $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Users/XingHuo/software/php-5.4.32/ext/phphashids/phphashids.c -o phphashids.lo 
+$(phplibdir)/phphashids.la: ./phphashids.la
+	$(LIBTOOL) --mode=install cp ./phphashids.la $(phplibdir)
+
+./phphashids.la: $(shared_objects_phphashids) $(PHPHASHIDS_SHARED_DEPENDENCIES)
+	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_phphashids) $(PHPHASHIDS_SHARED_LIBADD)
+
