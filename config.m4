@@ -41,7 +41,7 @@ if test "$PHP_PHPHASHIDS" != "no"; then
   dnl fi
 
   dnl # --with-phphashids -> add include path
-  PHP_ADD_INCLUDE($PHPHASHIDS_DIR/include)
+  dnl PHP_ADD_INCLUDE($PHPHASHIDS_DIR/include)
 
   dnl # --with-phphashids -> check for lib and symbol presence
   dnl LIBNAME=phphashids # you may want to change this
@@ -59,13 +59,5 @@ if test "$PHP_PHPHASHIDS" != "no"; then
   dnl
   dnl PHP_SUBST(PHPHASHIDS_SHARED_LIBADD)
 
-  PHP_NEW_EXTENSION(phphashids, phphashids.c,include/hashids/hashids,include/hashids/hashids.c, $ext_shared)
-fi
-
-if test -z "$PHP_DEBUG"; then
-    AC_ARG_ENABLE(debug,
-    [   --enable-debug          compile with debugging symbols],[
-        PHP_DEBUG=$enableval
-    ],[ PHP_DEBUG=no
-    ])
+  PHP_NEW_EXTENSION(phphashids, phphashids.c hashids.c, $ext_shared)
 fi

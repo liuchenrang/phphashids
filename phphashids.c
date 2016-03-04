@@ -26,7 +26,7 @@
 #include "php_ini.h"
 #include "ext/standard/info.h"
 #include "php_phphashids.h"
-#include "include/hashids/hashids.h"
+#include "hashids.h"
 /* If you declare any globals in php_phphashids.h uncomment this:
 ZEND_DECLARE_MODULE_GLOBALS(phphashids)
 */
@@ -240,4 +240,3 @@ PHP_FUNCTION(hashid_decode){
  * vim600: noet sw=4 ts=4 fdm=marker
  * vim<600: noet sw=4 ts=4
  */
-#include "include/hashids/hashids.c"
