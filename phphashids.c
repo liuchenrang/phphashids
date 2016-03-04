@@ -163,7 +163,7 @@ PHP_FUNCTION(confirm_phphashids_compiled){
         }
 
         len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "phphashids", arg);
-        RETURN_STRINGL(strg, len, 0);
+        RETURN_STRINGL(strg, len);
         }
 PHP_FUNCTION(hashid_encode){
         struct hashids_t *hashids;
@@ -198,7 +198,7 @@ PHP_FUNCTION(hashid_encode){
 
         hashids_free(hashids);
 
-        RETURN_STRINGL(encode_id, encode_id_len, 0);
+        RETURN_STRINGL(encode_id, encode_id_len);
 
 }
 PHP_FUNCTION(hashid_decode){
