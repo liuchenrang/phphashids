@@ -164,7 +164,7 @@ PHP_FUNCTION(confirm_phphashids_compiled){
 
         len = spprintf(&strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "phphashids", arg);
         RETURN_STRINGL(strg, len);
-        }
+}
 PHP_FUNCTION(hashid_encode){
         struct hashids_t *hashids;
 //        char *salt = HASHIDS_DEFAULT_SALT, *alphabet = HASHIDS_DEFAULT_ALPHABET;
@@ -180,12 +180,7 @@ PHP_FUNCTION(hashid_encode){
             return;
         }
         hashids = hashids_init3(salt, min_hash_length, alphabet);
-        php_printf("File: %s\n", "hashids_init3 ");
-
-
-        php_printf("File: %d\n", min_hash_length);
-        php_printf("File: %lld\n", auto_id);
-
+        
         numbers = &auto_id;
         buffer = emalloc(hashids_estimate_encoded_size(hashids, 1, numbers));
 //		php_printf("File: %s\n","buf" );
