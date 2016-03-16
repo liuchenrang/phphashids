@@ -180,11 +180,34 @@ PHP_FUNCTION(hashid_encode){
             return;
         }
         hashids = hashids_init3(salt, min_hash_length, alphabet);
-    
+
+
+        if (!hashids) {
+                switch (hashids_errno) {
+                        case HASHIDS_ERROR_ALLOC:
+                                php_error_docref(NULL TSRMLS_CC, E_ERROR, "Hashids: Allocation failed\n");
+                        break;
+                        case HASHIDS_ERROR_ALPHABET_LENGTH:
+
+                                php_error_docref(NULL TSRMLS_CC, E_ERROR,"Hashids: Alphabet is too short\n");
+                        break;
+                        case HASHIDS_ERROR_ALPHABET_SPACE:
+                                php_error_docref(NULL TSRMLS_CC, E_ERROR,"Hashids: Alphabet contains whitespace characters\n");
+                        break;
+                        default:
+                                php_error_docref(NULL TSRMLS_CC, E_ERROR,"Hashids: Unknown error\n");
+                        break;
+                }
+                return ;
+        }
         numbers = &auto_id;
         buffer = emalloc(hashids_estimate_encoded_size(hashids, 1, numbers));
 //		php_printf("File: %s\n","buf" );
-
+        if (!buffer) {
+                php_error_docref(NULL TSRMLS_CC, E_ERROR,"Cannot allocate memory for buffer\n");
+                hashids_free(hashids);
+                return ;
+        }
         hashids_encode(hashids, buffer, 1, numbers);
 
         encode_id_len = spprintf(&encode_id, 0, "%s", buffer);
@@ -211,7 +234,31 @@ PHP_FUNCTION(hashid_decode){
             return;
         }
         hashids = hashids_init3(salt, min_hash_length, alphabet);
+        if (!hashids) {
+                switch (hashids_errno) {
+                        case HASHIDS_ERROR_ALLOC:
+                                php_error_docref(NULL TSRMLS_CC, E_ERROR, "Hashids: Allocation failed\n");
+                        break;
+                        case HASHIDS_ERROR_ALPHABET_LENGTH:
+
+                                php_error_docref(NULL TSRMLS_CC, E_ERROR,"Hashids: Alphabet is too short\n");
+                        break;
+                        case HASHIDS_ERROR_ALPHABET_SPACE:
+                                php_error_docref(NULL TSRMLS_CC, E_ERROR,"Hashids: Alphabet contains whitespace characters\n");
+                        break;
+                        default:
+                                php_error_docref(NULL TSRMLS_CC, E_ERROR,"Hashids: Unknown error\n");
+                        break;
+                }
+                return ;
+        }
+
         numbers = emalloc(sizeof(unsigned long long));
+        if (!numbers) {
+                php_error_docref(NULL TSRMLS_CC, E_ERROR,"Cannot allocate memory for buffer\n");
+                hashids_free(hashids);
+                return ;
+        }
         result = hashids_decode(hashids, secret, numbers);
         number = *numbers;
         efree(numbers);
