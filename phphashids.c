@@ -230,9 +230,13 @@ PHP_FUNCTION(hashid_decode){
         /**
          * long salt min
          */
-        if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ssls", &secret, &secret_len, &salt, &salt_len, &min_hash_length, &alphabet, &alphabet_len) == FAILURE) {
-            return;
+        if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s!sls", &secret, &secret_len, &salt, &salt_len, &min_hash_length, &alphabet, &alphabet_len) == FAILURE) {
+            RETURN_NULL();
         }
+        if(!secret){
+            RETURN_NULL();
+        }
+
         hashids = hashids_init3(salt, min_hash_length, alphabet);
         if (!hashids) {
                 switch (hashids_errno) {
@@ -259,11 +263,13 @@ PHP_FUNCTION(hashid_decode){
                 hashids_free(hashids);
                 return ;
         }
+        *numbers = 0;
         result = hashids_decode(hashids, secret, numbers);
         number = *numbers;
         efree(numbers);
         hashids_free(hashids);
         RETURN_LONG(number);
+
 
 }
 //#include "hashids.c"
